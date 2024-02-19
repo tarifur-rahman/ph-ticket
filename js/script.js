@@ -5,11 +5,11 @@ function scrollsection(){
     })
 }
 
-let seatLeft=40;
-let seatBook=0;
-let totalprice=0;
-let grandprice=0;
-let discountprice=0;
+let seatLeft = 40;
+let seatBook = 0;
+let totalprice = 0;
+let grandprice = 0;
+let discountprice = 0;
 const allBtn = document.getElementsByClassName('A')
 console.log(allBtn);
     for(const btn of allBtn){
@@ -20,7 +20,7 @@ console.log(allBtn);
             seatLeft--;
             seatBook++;
             if(seatBook >= 5){
-                alert("You don't buy no more ticket ")
+                alert("You don't buy any more ticket.Thank You Sir!")
               return;
             }  
            
@@ -28,7 +28,7 @@ console.log(allBtn);
             SetInnerText('remaning-seat',seatLeft);
             SetInnerText('count-tricket',seatBook);
             btn.setAttribute('disabled',true);
-            // append child taable
+            
             const ticektsection = document.getElementById('price')
             const p = document.createElement('p');
             p.innerText =btn.innerText;
@@ -59,22 +59,21 @@ console.log(allBtn);
     btn.addEventListener('click',function(){
         
       
-        if(seatBook <= 5){
+        if(seatBook >= 4) {
             const apply = document.getElementById('apply')
-           
            
          const couponCode = document.getElementById('field').value;
          if(couponCode === "NEW15"){
             
-            discountprice=totalprice*0.15;
-            grandprice=totalprice-discountprice;
+            discountprice = totalprice * 0.15;
+            grandprice = totalprice - discountprice;
             SetInnerText('grand-total',grandprice);
             const discountPrice = document.getElementById('discount-price');
             const p = document.createElement('p');
             p.innerText = "Discount Price"
             discountPrice.appendChild(p);
             const p1 = document.createElement('p');
-            p1.innerText = "BDT"+discountprice.toFixed(2);
+            p1.innerText = "BDT"+ " " + discountprice.toFixed(2);
             discountPrice.appendChild(p1);
             
             const hideDiv = document.getElementById('hide-div')
@@ -83,22 +82,22 @@ console.log(allBtn);
          }
          else if(couponCode === "Couple 20"){
             
-            discountprice=totalprice*0.20;
-            grandprice=totalprice-discountprice;
+            discountprice = totalprice * 0.20;
+            grandprice = totalprice - discountprice;
             SetInnerText('grand-total',grandprice);
             const discountPrice = document.getElementById('discount-price');
             const p = document.createElement('p');
             p.innerText = "Discount Price"
             discountPrice.appendChild(p);
             const p1 = document.createElement('p');
-            p1.innerText = "BDT"+discountprice.toFixed(2);
+            p1.innerText = "BDT"+ " " + discountprice.toFixed(2);
             discountPrice.appendChild(p1);
             
             const hideDiv = document.getElementById('hide-div')
             hideDiv.classList.add('hidden')
 
          }else{
-            alert('wrong coupon Sir')
+            alert('Sorry Sir! This is Wrong Coupon.')
          }
 
             
@@ -106,15 +105,10 @@ console.log(allBtn);
 
     })
    
-    
-    // next btn er kaaj
-   
-   
-    const btnn = document.getElementById("next");
-    console.log(btnn)
-btnn.addEventListener('click', function () {
+
+    const btn2 = document.getElementById("next");
+    btn2.addEventListener('click', function () {
     const num = document.getElementById("phone-number").value;
-    console.log(num)
     if (seatBook >= 1 && num.length >= 1) {
         getHidden('main-element');
         getAdd('success');
