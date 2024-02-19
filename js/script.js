@@ -1,54 +1,136 @@
-const allBtn = document.getElementsByClassName('A');
-let count = 0;
-for (const btn of allBtn){
-    btn.addEventListener('click' , function(e){
-        
-        count = count + 1;
-        const elementName = e.target.innerText;
-        const priceContainer = document.getElementById('price');
-        const p = document.createElement('h1');
-        p.innerText = elementName;
-        const p2 = document.createElement('p');
-        p2.innerText = 'Economoy';
-        const p3 = document.createElement('p');
-        p3.innerText = 550;
-
-        priceContainer.appendChild(p);
-        priceContainer.appendChild(p2);
-        priceContainer.appendChild(p3);
-
-        document.getElementById('total-price');
-        const multi = count * 550;
-        document.getElementById('grand-total');
-        const multi2 = count * 550 ;
-
-        showDisplay('grand-total' , multi2)
-        showDisplay('total-price' , multi)
-        showDisplay("count-tricket" , count);
+function scrollsection(){
+    const target = document.getElementById('target')
+    target.scrollIntoView({
+        behavior:'smooth'
     })
 }
 
-const btn = document.getElementById('apply-btn');
-btn.addEventListener('click' , function(){
-    const couponCodeElement = document.getElementById('coupon-input');
-    const couponElement = couponCodeElement.value;
-    const couponCode = couponElement.split(' ').join("").toUpperCase()
+let seatLeft=40;
+let seatBook=0;
+let totalprice=0;
+let grandprice=0;
+let discountprice=0;
+const allBtn = document.getElementsByClassName('A')
+console.log(allBtn);
+    for(const btn of allBtn){
+        console.log(btn)
+        btn.addEventListener('click', function(){
+           
+          
+            seatLeft--;
+            seatBook++;
+            if(seatBook >= 5){
+                alert("You don't buy no more ticket ")
+              return;
+            }  
+           
+            btn.style.backgroundColor = '#1DD100';
+            SetInnerText('remaning-seat',seatLeft);
+            SetInnerText('count-tricket',seatBook);
+            btn.setAttribute('disabled',true);
+            // append child taable
+            const ticektsection = document.getElementById('price')
+            const p = document.createElement('p');
+            p.innerText =btn.innerText;
+            const p1 = document.createElement('p');
+            p1.innerText="Economy";
+            const p2 = document.createElement('p');
+           
+            p2.innerText=550;
+            ticektsection.appendChild(p);
+            ticektsection.appendChild(p1);
+            ticektsection.appendChild(p2);
+
+            
+
+            totalprice += 550;
+            SetInnerText('total-price',totalprice);
+            grandprice=totalprice;
+            SetInnerText('grand-total',grandprice); 
+          
+
+            
+        })
+    }
     
-    if(couponCode === "NEW15"){
+    const btn = document.getElementById("apply");
+
+    
+    btn.addEventListener('click',function(){
         
-        const discountElement = document.getElementById('grand-total');
-        
-    }
-    else if( couponCode === "COUPLE20"){
-        console.log('apni 20% coupon paicen');
-    }
-    else{
-        alert('Wrong Coupon code! please input a Right Coupon Code.Thank You');
+      
+        if(seatBook <= 5){
+            const apply = document.getElementById('apply')
+           
+           
+         const couponCode = document.getElementById('field').value;
+         if(couponCode === "NEW15"){
+            
+            discountprice=totalprice*0.15;
+            grandprice=totalprice-discountprice;
+            SetInnerText('grand-total',grandprice);
+            const discountPrice = document.getElementById('discount-price');
+            const p = document.createElement('p');
+            p.innerText = "Discount Price"
+            discountPrice.appendChild(p);
+            const p1 = document.createElement('p');
+            p1.innerText = "BDT"+discountprice.toFixed(2);
+            discountPrice.appendChild(p1);
+            
+            const hideDiv = document.getElementById('hide-div')
+            hideDiv.classList.add('hidden')
+            
+         }
+         else if(couponCode === "Couple 20"){
+            
+            discountprice=totalprice*0.20;
+            grandprice=totalprice-discountprice;
+            SetInnerText('grand-total',grandprice);
+            const discountPrice = document.getElementById('discount-price');
+            const p = document.createElement('p');
+            p.innerText = "Discount Price"
+            discountPrice.appendChild(p);
+            const p1 = document.createElement('p');
+            p1.innerText = "BDT"+discountprice.toFixed(2);
+            discountPrice.appendChild(p1);
+            
+            const hideDiv = document.getElementById('hide-div')
+            hideDiv.classList.add('hidden')
+
+         }else{
+            alert('wrong coupon Sir')
+         }
+
+            
+        }
+
+    })
+   
+    
+    // next btn er kaaj
+   
+   
+    const btnn = document.getElementById("next");
+    console.log(btnn)
+btnn.addEventListener('click', function () {
+    const num = document.getElementById("phone-number").value;
+    console.log(num)
+    if (seatBook >= 1 && num.length >= 1) {
+        getHidden('main-element');
+        getAdd('success');
     }
 })
 
 
-function showDisplay(id,value){
-    const setBtn = document.getElementById(id);
-    setBtn.innerText = value;
-} 
+
+    
+    function getHidden(elementId){
+        document.getElementById(elementId).classList.add('hidden')
+    }
+    function getAdd(elementId){
+        document.getElementById(elementId).classList.remove('hidden');
+    }
+    function SetInnerText(elementId,value){
+        document.getElementById(elementId).innerText = value;
+    }
+
