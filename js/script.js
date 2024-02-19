@@ -111,6 +111,7 @@ console.log(allBtn);
     const num = document.getElementById("phone-number").value;
     if (seatBook >= 1 && num.length >= 1) {
         getHidden('main-element');
+        getHidden('main-element2');
         getAdd('success');
     }
 })
